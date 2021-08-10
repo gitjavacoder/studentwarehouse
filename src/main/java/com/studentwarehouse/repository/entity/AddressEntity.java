@@ -1,6 +1,7 @@
 package com.studentwarehouse.repository.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="address")
@@ -19,9 +20,12 @@ public class AddressEntity {
     @Column(name = "city")
     private String city;
 
-    @ManyToOne
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private PersonEntity personEntity;
+    //@ManyToOne
+    //@JoinColumn(name = "address_id", referencedColumnName = "id")
+    //private PersonEntity personEntity;
+
+    @ManyToMany(mappedBy = "addressList")
+    List<PersonEntity> persons;
 
     public long getId() {
         return id;
@@ -55,11 +59,21 @@ public class AddressEntity {
         this.city = city;
     }
 
+    /*
     public PersonEntity getPersonEntity() {
         return personEntity;
     }
 
     public void setPersonEntity(PersonEntity personEntity) {
         this.personEntity = personEntity;
+    }
+    */
+
+    public List<PersonEntity> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<PersonEntity> persons) {
+        this.persons = persons;
     }
 }

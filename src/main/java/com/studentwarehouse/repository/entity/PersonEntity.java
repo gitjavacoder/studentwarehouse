@@ -26,8 +26,21 @@ public class PersonEntity {
     //@Column(name = "address")
     //private List<Address> address = new ArrayList<>();
 
-    @OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL)
-    private List<AddressEntity> addressList;
+    //@OneToMany(mappedBy = "personEntity", cascade = CascadeType.ALL)
+    //private List<AddressEntity> addressList;
+
+    //@ManyToMany
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinTable(
+            name = "address_person",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    List<AddressEntity> addressList;
 
     public String getFirstName() {
         return firstName;
@@ -63,6 +76,7 @@ public class PersonEntity {
     public void setId(long id) {
         this.id = id;
     }
+
 
     public List<AddressEntity> getAddressList() {
         return addressList;
